@@ -15,7 +15,7 @@ const navigationLinks = [
 function Header() {
     return (
         <header>
-            <Box background='#000' color='lime' padding='5' position='fixed' top='0' left='0' right='0'>
+            <Box background='#000' color='lime' padding='5' position='fixed' top='0' left='0' right='0' zIndex={100}>
               <HStack justifyContent='space-between' maxWidth='9/12' margin='auto'>
                 <Text fontWeight="bold" textStyle='lg'>Spotify Web App</Text>
                   <nav>
@@ -25,6 +25,7 @@ function Header() {
                           href={link.href}
                           key={link.href}
                           variant='plain'
+                          color='lime'
                         >
                           {link.href}
                         </Link>

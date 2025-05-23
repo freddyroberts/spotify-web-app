@@ -1,8 +1,12 @@
 'use client';
 
+import useSpotifyAuthStore from '@/stores/spotify-auth-store';
+import { Spinner, VStack, Text, Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 export default function AuthenticatePage() {
+  const setVerifier = useSpotifyAuthStore((state) => state.setVerifier);
+
   useEffect(() => {
     const redirectToSpotify = async () => {
       const clientId = "1347915da2064a6f9c7a87b0ff85ae36";
@@ -11,7 +15,7 @@ export default function AuthenticatePage() {
       const verifier = generateCodeVerifier(128);
       const challenge = await generateCodeChallenge(verifier);
 
-      localStorage.setItem('verifier', verifier);
+      setVerifier(verifier);
 
       const params = new URLSearchParams({
         client_id: clientId,
@@ -28,7 +32,21 @@ export default function AuthenticatePage() {
     redirectToSpotify();
   }, []);
 
-  return <p>Redirecting to Spotify...</p>;
+  return (
+    <Box backgroundColor='#000'>
+      <VStack
+        alignItems="center"
+        backgroundColor="#000"
+        color='#000'
+        gap='10'
+        justifyContent="center"
+        minHeight="100vh"
+      >
+        <Spinner color='lime' size='xl' />
+        <Text color='lime'>Loading...</Text>
+      </VStack>
+    </Box>
+  );
 }
 
 function generateCodeVerifier(length: number) {

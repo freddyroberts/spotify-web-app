@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import Hero from "@/components/ui/hero";
+import { Hero } from "@/components/ui/hero";
 import { Box } from "@chakra-ui/react";
 
 export default function Home() {
