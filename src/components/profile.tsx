@@ -1,5 +1,6 @@
 'use client'
 
+import { SpotifyProfile } from "@/types/spotify";
 import {
   Avatar,
   Card,
@@ -11,36 +12,6 @@ import {
   CardHeader,
   DataList
 } from "@chakra-ui/react";
-
-export interface SpotifyProfile {
-  data: {
-    country: string;
-    display_name: string;
-    email: string;
-    explicit_content: {
-      filter_enabled: boolean;
-      filter_locked: boolean;
-    };
-    external_urls: {
-      spotify: string;
-    };
-    followers: {
-      href: string | null;
-      total: number;
-    };
-    href: string;
-    id: string;
-    images: {
-      height: number;
-      url: string;
-      width: number;
-    }[];
-    product: string;
-    type: string;
-    uri: string;
-  }
-}
-
 
 export const Profile = (profile: SpotifyProfile) => {
   const profileFields = [
@@ -67,7 +38,7 @@ export const Profile = (profile: SpotifyProfile) => {
             <HStack>
               <Avatar.Root>
                 <Avatar.Fallback name={profile.data.display_name} />
-                <Avatar.Image src={profile.data.images[0].url} />
+                <Avatar.Image src={profile.data.images[0]?.url} />
               </Avatar.Root>
               <Heading as={'h3'}>{profile.data.display_name}</Heading>
               <Stack>

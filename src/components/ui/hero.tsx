@@ -1,43 +1,20 @@
 "use client"
 
-import { Text, VStack } from "@chakra-ui/react";
+import { Tabs, Text, VStack } from "@chakra-ui/react";
 import { Profile } from "../profile";
 import SpotifyAuthButton from "./spotifyAuthButton";
 import useSpotifyAuthStore from "@/stores/spotify-auth-store";
 import useSpotifyAccessToken from "@/hooks/useSpotifyAccessToken";
-import { useEffect, useState } from "react";
 import { Stats } from "../stats";
+import { LuChartArea, LuSettings, LuUser } from "react-icons/lu";
+import { LiaUserFriendsSolid } from "react-icons/lia";
+import useFetchSpotifyData from "@/hooks/useFetchSpotifyData";
 
 export const Hero = () => {
-  const [profileData, setProfileData] = useState();
   const verifier = useSpotifyAuthStore(state => state.verifier);
-  const accessToken = useSpotifyAuthStore(state => state.accessToken);
+  const profileData = useFetchSpotifyData('https://api.spotify.com/v1/me')
 
   useSpotifyAccessToken();
-
-  useEffect(() => {
-    const getProfile = async () => {
-  
-      if (!accessToken) return;
-
-      try {
-        const request = await fetch("https://api.spotify.com/v1/me", {
-          method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
-        });
-        
-        if (!request.ok) {
-          throw new Error(`Profile data request failed: ${request.status}`);
-        }
-
-        const response = await request.json();        
-        setProfileData(response);
-      } catch (err) {
-        console.error(`Error occured: ${err}`);
-      }
-    }
-    getProfile();
-  },[accessToken]);
-  
 
   return (
     <VStack
@@ -51,12 +28,44 @@ export const Hero = () => {
       <Text textStyle='4xl'>Let&apos;s get started</Text>
       <SpotifyAuthButton />
 
-      { verifier ? (
+      <Tabs.Root defaultValue="members">
+        <Tabs.List bg="bg.muted" bgColor={'gray.400'}>
+          <Tabs.Trigger value="members">
+            <LuUser />
+            Profile
+          </Tabs.Trigger>
+          <Tabs.Trigger value="stats">
+            <LuChartArea />
+            Stats
+          </Tabs.Trigger>
+          <Tabs.Trigger value="friends">
+            <LiaUserFriendsSolid />
+            Friends
+          </Tabs.Trigger>
+          <Tabs.Trigger value="tasks">
+            <LuSettings />
+            Settings
+          </Tabs.Trigger>
+        </Tabs.List>
+         { verifier ? (
         <>
-          <Profile data={profileData} />
-          <Stats />
+          <Tabs.Content value="members">
+            { profileData && (
+              <Profile data={profileData}/>  
+            )}
+          </Tabs.Content>
+          <Tabs.Content value="stats">
+            <Stats />
+          </Tabs.Content>
+          <Tabs.Content value="friends">
+            Friends
+          </Tabs.Content>
+          <Tabs.Content value="tasks">
+            Adjust your settings
+          </Tabs.Content>
         </>
       ) : null }
+      </Tabs.Root>
     </VStack>
   );
 }
