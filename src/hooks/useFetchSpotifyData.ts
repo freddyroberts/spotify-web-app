@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import useSpotifyAuthStore from "@/stores/spotify-auth-store";
-import useSpotifyAccessToken from "./useSpotifyAccessToken";
 
 function useFetchSpotifyData<T>(url: string): T | null {
     const [data, setData] = useState<T | null>(null);
     const accessToken = useSpotifyAuthStore(state => state.accessToken);
-  
-    useSpotifyAccessToken();
   
     useEffect(() => {
       const getData = async () => {
