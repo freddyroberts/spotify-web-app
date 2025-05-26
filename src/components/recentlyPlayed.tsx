@@ -1,5 +1,5 @@
 import useFetchSpotifyData from '@/hooks/useFetchSpotifyData'
-import { Container, Grid, GridItem, Heading, Image } from '@chakra-ui/react';
+import { Container, Grid, GridItem, Heading, Image, Text } from '@chakra-ui/react';
 import React from 'react'
 
 export type RecentlyPlayed = {
@@ -88,21 +88,19 @@ export type Image = {
 };
 
 export default function RecentlyPlayed() {
-  const recent = useFetchSpotifyData<RecentlyPlayed>('https://api.spotify.com/v1/me/player/recently-played?limit=9');
+  const recent = useFetchSpotifyData<RecentlyPlayed>('https://api.spotify.com/v1/me/player/recently-played?limit=12');
   const isLoading = !recent;
-
-  console.log(recent);
   
   return (
     <>
       {!isLoading && (
-        <Container maxWidth='80rem'>
-          <Heading as='h2'>Recently Played Tracks</Heading>
-          <Grid templateColumns="repeat(3, 1fr)" columnGap={6}>
+        <Container maxWidth='60rem'>
+          <Heading as='h2' marginBottom='2rem'>Recently Played Tracks</Heading>
+          <Grid templateColumns="repeat(3, 1fr)" gap={4}>
             {recent.items.map((item) => (
               <GridItem key={item.track.id}>
-                <Image src={item.track.album.images[0].url} alt={item.track.album.name} rounded='md' maxWidth='20rem'/>
-                <Heading as='h5'>{item.track.name}</Heading>
+                <Image src={item.track.album.images[0].url} alt={item.track.album.name} rounded='md' maxWidth='100%'/>
+                <Text as='h5'>{item.track.name}</Text>
               </GridItem>
             ))}
           </Grid>
