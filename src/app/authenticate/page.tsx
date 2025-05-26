@@ -9,8 +9,8 @@ export default function AuthenticatePage() {
 
   useEffect(() => {
     const redirectToSpotify = async () => {
-      const clientId = "1347915da2064a6f9c7a87b0ff85ae36";
-      const redirectUri = 'http://localhost:3000/';
+      const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
+      const redirectUri = 'http://localhost:3000/callback';
 
       const verifier = generateCodeVerifier(128);
       const challenge = await generateCodeChallenge(verifier);
