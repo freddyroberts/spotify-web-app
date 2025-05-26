@@ -3,7 +3,7 @@
 import Header from '@/components/header';
 import { Profile } from '@/components/profile'
 import RecentlyPlayed from '@/components/recentlyPlayed';
-import { Stats } from '@/components/stats';
+import { MostPlayedArtists } from '@/components/mostPlayedArtists';
 import { Flex, } from '@chakra-ui/react'
 import React from 'react'
 
@@ -11,9 +11,9 @@ export default function DashboardPage() {
   return (
     <>
     <Header />
-    <Flex gap="4" direction="column" marginTop='2rem' padding='0 3rem'>
+    <Flex gap="4" direction="column" padding='1rem 3rem 0' backgroundColor='whitesmoke'>
       <Profile />
-      <Stats />
+      <MostPlayedArtists />
       <RecentlyPlayed />
     </Flex>
     </>

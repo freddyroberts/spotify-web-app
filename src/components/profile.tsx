@@ -13,7 +13,13 @@ import {
   CardHeader,
   DataList,
   SkeletonCircle,
-  Skeleton
+  Skeleton,
+  AspectRatio,
+  Image,
+  VStack,
+  Container,
+  Box,
+  SkeletonText
 } from "@chakra-ui/react";
 
 export const Profile = () => {
@@ -30,50 +36,39 @@ export const Profile = () => {
   ] : [];
   
   return (
-    <>
+    <Container margin='0 auto' maxWidth='68rem'>
       {!isLoading ?
-        <Card.Root
-          backgroundColor='#fff'
-          color='#000' 
-          borderColor='lime'
-          size='sm'
-          width='100%'
-        >
-          <CardHeader>
-            <HStack>
-              <Avatar.Root>
-                <Avatar.Fallback name={profile.display_name} />
-                <Avatar.Image src={profile.images[0]?.url} />
-              </Avatar.Root>
-              <Heading as={'h3'}>{profile.display_name}</Heading>
-              <Stack>
-                <Text textStyle='sm'>{profile.country}</Text>
-              </Stack>
-            </HStack>
-          </CardHeader>
-          <CardBody>
-            <HStack>
-              <DataList.Root>
-                {profileFields?.map((item) => (
-                  <DataList.Item key={item.label} pt="4">
-                    <DataList.ItemLabel>{item.label}</DataList.ItemLabel>
-                    <DataList.ItemValue>{item.value}</DataList.ItemValue>
-                  </DataList.Item>
-                ))}
-              </DataList.Root>
-            </HStack>
-          </CardBody>
-        </Card.Root>
+        <>
+          <AspectRatio ratio={3.5 / 1}>
+            <Image
+              src='https://picsum.photos/3200'
+              alt="naruto"
+              objectFit="cover"
+              rounded='l2'
+            />
+          </AspectRatio>
+          <Box margin='-6rem 0 0 2rem' textAlign='center' width={profile.images[0]?.width/1.6}>
+            <Image
+              src={profile.images[0] ? profile.images[0]?.url : 'https://upload.wikimedia.org/wikipedia/en/3/3f/Richard_d_james_album_cover.jpg'}
+              alt={profile.display_name}
+              borderRadius='full'
+              boxSize='100%'
+              fit='cover'
+              position='relative'
+            />
+            <Text textStyle='2xl' fontWeight='semibold'>{profile.display_name}</Text>
+          </Box>
+        </>
         : (
-        <HStack gap="5">
-          <SkeletonCircle size="12" />
-          <Stack flex="1">
-            <Skeleton height="5" />
-            <Skeleton height="5" width="80%" />
-          </Stack>
-    </HStack>
+        <Stack gap="6">
+          <Skeleton height="200px" />
+          <HStack width="full">
+            <SkeletonCircle size="10" />
+            <SkeletonText noOfLines={1} />
+          </HStack>
+        </Stack>
         )
       }
-    </>
+    </Container>
   )
 }

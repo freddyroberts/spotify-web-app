@@ -1,35 +1,36 @@
-import { Box, HStack, Link, Text } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
+import Link from 'next/link';
 
 const navigationLinks = [
   {
-    href: '/why'
+    href: '/why',
+    text: 'why'
   },
   {
-    href: '/help'
-  },
-  {
-    href: '/login'
+    href: '/help',
+    text: 'help'
   }
 ];
 
 function Header() {
     return (
         <header>
-            <Box background='#000' color='lime' padding='5' position='fixed' top='0' left='0' right='0' zIndex={100}>
-              <HStack justifyContent='space-between' maxWidth='9/12' margin='auto'>
-                <Text fontWeight="bold" textStyle='lg'>Spotify Web App</Text>
+            <Box background='#000' color='lime' padding='5'>
+              <HStack justifyContent='space-between' maxWidth='64rem' margin='auto'>
+                <Text fontWeight="bold" textStyle='lg'><Link href='/'>Planet Spotify</Link></Text>
                   <nav>
                     <HStack justifyContent='flex-end'>
                       { navigationLinks.map(link => (
                         <Link 
-                          href={link.href}
                           key={link.href}
-                          variant='plain'
+                          href={link.href}
                           color='lime'
                         >
-                          {link.href}
+                          {link.text}
                         </Link>
                       ))}
+
+
                     </HStack>
                   </nav>
               </HStack>
