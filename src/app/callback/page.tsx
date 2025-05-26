@@ -15,7 +15,6 @@ export default function CallbackPage() {
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code');
 
-
     if (!code) { return; }
 
     const params = new URLSearchParams();
@@ -37,7 +36,7 @@ export default function CallbackPage() {
       .then((data) => {
         setAuth(data.access_token, data.refresh_token, data.expires_in);
         console.log(data);
-        router.push('/');
+        router.push('/dashboard');
       });
   }, [clientId, router, setAuth, verifier]);
 

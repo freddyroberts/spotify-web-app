@@ -1,5 +1,6 @@
 'use client'
 
+import useFetchSpotifyData from "@/hooks/useFetchSpotifyData";
 import { SpotifyProfile } from "@/types/spotify";
 import {
   Avatar,
@@ -10,39 +11,43 @@ import {
   Text,
   Stack,
   CardHeader,
-  DataList
+  DataList,
+  SkeletonCircle,
+  Skeleton
 } from "@chakra-ui/react";
 
-export const Profile = (profile: SpotifyProfile) => {
-  const profileFields = [
-    { label: "Product", value: profile.data?.product },
-    { label: "Email", value: profile.data?.email },
-    { label: "Followers", value: profile.data?.followers.total },
-    { label: "Explicit Content Filter", value: profile.data?.explicit_content.filter_enabled ? "Enabled" : "Disabled" },
-    { label: "Spotify URI", value: profile.data?.uri },
-    { label: "Spotify URL", value: profile.data?.external_urls.spotify },
-  ];
-
+export const Profile = () => {
+  const profile = useFetchSpotifyData<SpotifyProfile>('https://api.spotify.com/v1/me');
+  const isLoading = !profile;
+  
+  const profileFields = !isLoading ? [
+    { label: "Product", value: profile.product },
+    { label: "Email", value: profile.email },
+    { label: "Followers", value: profile.followers.total },
+    { label: "Explicit Content Filter", value: profile.explicit_content.filter_enabled ? "Enabled" : "Disabled" },
+    { label: "Spotify URI", value: profile.uri },
+    { label: "Spotify URL", value: profile.external_urls.spotify },
+  ] : [];
+  
   return (
     <>
-      {profile.data ?
+      {!isLoading ?
         <Card.Root
           backgroundColor='#fff'
           color='#000' 
           borderColor='lime'
           size='sm'
-          maxWidth='600px'
           width='100%'
         >
           <CardHeader>
             <HStack>
               <Avatar.Root>
-                <Avatar.Fallback name={profile.data.display_name} />
-                <Avatar.Image src={profile.data.images[0]?.url} />
+                <Avatar.Fallback name={profile.display_name} />
+                <Avatar.Image src={profile.images[0]?.url} />
               </Avatar.Root>
-              <Heading as={'h3'}>{profile.data.display_name}</Heading>
+              <Heading as={'h3'}>{profile.display_name}</Heading>
               <Stack>
-                <Text textStyle='sm'>{profile.data.country}</Text>
+                <Text textStyle='sm'>{profile.country}</Text>
               </Stack>
             </HStack>
           </CardHeader>
@@ -59,7 +64,15 @@ export const Profile = (profile: SpotifyProfile) => {
             </HStack>
           </CardBody>
         </Card.Root>
-        : ''
+        : (
+        <HStack gap="5">
+          <SkeletonCircle size="12" />
+          <Stack flex="1">
+            <Skeleton height="5" />
+            <Skeleton height="5" width="80%" />
+          </Stack>
+    </HStack>
+        )
       }
     </>
   )
