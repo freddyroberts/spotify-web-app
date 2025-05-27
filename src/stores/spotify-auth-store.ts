@@ -29,7 +29,7 @@ const useSpotifyAuthStore = create<SpotifyAuthStore>()(
       setAuth: (accessToken, refreshToken, expiresAt) => {
         set({ accessToken, refreshToken, expiresAt });
       },
-      resetAuth: () => set({ accessToken: null, refreshToken: null, expiresAt: null})
+      resetAuth: () => set({ accessToken: null, refreshToken: null, expiresAt: null, verifier: null})
     }),
     { name: 'spotify-auth-storage',
       storage: createJSONStorage(() => sessionStorage),
