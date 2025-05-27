@@ -27,12 +27,24 @@ export const MostPlayedArtists = () => {
             margin='2rem 0 1rem'
             rounded='l2'
           >
-            <Heading as='h2'>Your Most Recent Top Artists</Heading>
+            <Heading as='h2'>Your most played artists</Heading>
           </Box>
-          <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+          <Grid
+            gridTemplateColumns="repeat(2, 1fr)"
+            gap='1rem' fontWeight="medium"
+            lg={{
+              gridTemplateColumns:'repeat(4, 1fr)',
+              gap: '4'
+          }}>
             { topArtists && topArtists.items.map((artist, index) => (
-              <GridItem key={artist.id}>
-                <Image src={artist.images[0]?.url} alt={artist.name} rounded='md' maxWidth='100%'/>
+              <GridItem key={artist.id} textAlign='center'>
+                <Image
+                  src={artist.images[0]?.url}
+                  alt={artist.name}
+                  rounded='md'
+                  marginBottom='.3rem'
+                  maxWidth='100%'
+                />
                 <Text as='h5'>{index+1}. {artist.name}</Text>
               </GridItem>
             ))}

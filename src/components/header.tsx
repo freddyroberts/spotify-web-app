@@ -31,7 +31,7 @@ function Header() {
     <header>
       <Box background='#000' color='lime' padding='5'>
         <HStack justifyContent='space-between' maxWidth='64rem' margin='auto'>
-          <Text fontWeight="bold" textStyle='lg'><Link href='/'>Planet Spotify</Link></Text>
+          <Text fontWeight="bold" textStyle='lg'><Link href='/'>Planet S</Link></Text>
             <nav>
               <HStack justifyContent='flex-end'>
                 { navigationLinks.map(link => (

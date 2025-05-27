@@ -1,5 +1,5 @@
 import useFetchSpotifyData from '@/hooks/useFetchSpotifyData'
-import { Box, Container, Grid, GridItem, Heading, Image, Text } from '@chakra-ui/react';
+import { Box, Card, CardDescription, Container, Grid, GridItem, Heading, HStack, Image, Text } from '@chakra-ui/react';
 import React from 'react'
 
 export type RecentlyPlayed = {
@@ -90,7 +90,7 @@ export type Image = {
 export default function RecentlyPlayed() {
   const recent = useFetchSpotifyData<RecentlyPlayed>('https://api.spotify.com/v1/me/player/recently-played?limit=8');
   const isLoading = !recent;
-  
+
   return (
     <>
       {!isLoading && (
@@ -101,14 +101,31 @@ export default function RecentlyPlayed() {
             padding='1rem'
             margin='2rem 0 1rem'
             rounded='l2'
-          >            
+          >
             <Heading as='h2'>Recently Played Tracks</Heading>
           </Box>
-          <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+          <Grid
+            gap='1rem'
+            templateColumns="repeat(2, 1fr)"
+            lg={{
+              gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem'
+            }}>
             {recent.items.map((item) => (
-              <GridItem key={item.track.id}>
-                <Image src={item.track.album.images[0].url} alt={item.track.album.name} rounded='md' maxWidth='100%'/>
-                <Text as='h5'>{item.track.name}</Text>
+              <GridItem key={item.track.id} rounded='md'>
+                <Card.Root>
+                  <HStack>
+                    <Image
+                      src={item.track.album.images[0].url}
+                      alt={item.track.album.name}
+                      width='30%'
+                      rounded='md'
+                      maxWidth='100%'
+                    />
+                    <CardDescription>
+                      <Text as='h5'>{item.track.name}</Text>
+                    </CardDescription>
+                  </HStack>
+                </Card.Root>
               </GridItem>
             ))}
           </Grid>

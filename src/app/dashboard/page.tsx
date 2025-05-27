@@ -11,7 +11,7 @@ export default function DashboardPage() {
   return (
     <>
     <Header />
-    <Flex gap="4" direction="column" padding='1rem 3rem 0' backgroundColor='whitesmoke'>
+    <Flex gap="4" direction="column" backgroundColor='whitesmoke'>
       <Profile />
       <MostPlayedArtists />
       <RecentlyPlayed />
