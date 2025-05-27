@@ -35,7 +35,6 @@ export default function CallbackPage() {
       .then((response) => response.json())
       .then((data) => {
         setAuth(data.access_token, data.refresh_token, data.expires_in);
-        console.log(data);
         router.push('/dashboard');
       });
   }, [clientId, router, setAuth, verifier]);

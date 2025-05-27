@@ -30,7 +30,7 @@ export default function AuthenticatePage() {
     };
 
     redirectToSpotify();
-  }, []);
+  }, [setVerifier]);
 
   return (
     <Box backgroundColor='#000'>

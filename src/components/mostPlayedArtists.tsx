@@ -15,6 +15,7 @@ import {
 export const MostPlayedArtists = () => {
   const topArtists = useFetchSpotifyData<SpotifyTopItems<SpotifyArtist>>('https://api.spotify.com/v1/me/top/artists?offset=0&limit=8');
   const isLoading = !topArtists;
+
   return (
     <>
       {!isLoading && (
