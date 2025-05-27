@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export default function CallbackPage() {
   const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
-  const callbackUrl = 'http://localhost:3000/callback';
+  const callbackUrl = process.env.NEXT_PUBLIC_SPOTIFY_CALLBACK_URL;
   const verifier = useSpotifyAuthStore.getState().verifier;
   const setAuth = useSpotifyAuthStore.getState().setAuth;
   const router = useRouter();
