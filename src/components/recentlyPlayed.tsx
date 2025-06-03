@@ -1,5 +1,5 @@
 import useFetchSpotifyData from '@/hooks/useFetchSpotifyData'
-import { Box, Card, CardDescription, Container, Grid, GridItem, Heading, HStack, Image, Text } from '@chakra-ui/react';
+import { Box, Card, Container, Grid, GridItem, Heading, HStack, Image, Text } from '@chakra-ui/react';
 import React from 'react'
 
 export type RecentlyPlayed = {
@@ -107,9 +107,8 @@ export default function RecentlyPlayed() {
           <Grid
             gap='1rem'
             templateColumns="repeat(2, 1fr)"
-            lg={{
-              gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem'
-            }}>
+            lg={{gridTemplateColumns: 'repeat(4, 1fr)'}}
+          >
             {recent.items.map((item) => (
               <GridItem key={item.track.id} rounded='md'>
                 <Card.Root>
@@ -121,9 +120,15 @@ export default function RecentlyPlayed() {
                       rounded='md'
                       maxWidth='100%'
                     />
-                    <CardDescription>
-                      <Text as='h5'>{item.track.name}</Text>
-                    </CardDescription>
+                    <Text
+                      textStyle='sm'
+                      whiteSpace='nowrap'
+                      overflow='hidden'
+                      textOverflow='ellipsis'
+                      width='10rem'
+                    >
+                      {item.track.name}
+                    </Text>
                   </HStack>
                 </Card.Root>
               </GridItem>

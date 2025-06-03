@@ -24,7 +24,7 @@ export const MostPlayedArtists = () => {
             bg='#000'
             color='lime'
             padding='1rem'
-            margin='2rem 0 1rem'
+            margin='1rem 0 1rem'
             rounded='l2'
           >
             <Heading as='h2'>Your most played artists</Heading>
