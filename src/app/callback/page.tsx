@@ -10,20 +10,26 @@ export default function CallbackPage() {
   const callbackUrl = process.env.NEXT_PUBLIC_SPOTIFY_CALLBACK_URL;
   const verifier = useSpotifyAuthStore.getState().verifier;
   const setAuth = useSpotifyAuthStore.getState().setAuth;
+  const refreshToken = useSpotifyAuthStore.getState().refreshToken;
   const router = useRouter();
   
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code');
-
-    if (!code) { return; }
+    
+    if (!code || !refreshToken) { return; }
 
     const params = new URLSearchParams();
-
     params.append("client_id", clientId);
-    params.append("grant_type", "authorization_code");
-    params.append("code", code);
-    params.append("redirect_uri", callbackUrl);
-    params.append("code_verifier", verifier!);
+
+    if (refreshToken) {
+      params.append("grant_type", "refresh_token");
+      params.append("refresh_token", refreshToken);
+    } else {
+      params.append("grant_type", "authorization_code");
+      params.append("code", code);
+      params.append("redirect_uri", callbackUrl);
+      params.append("code_verifier", verifier!);
+    }
 
     fetch("https://accounts.spotify.com/api/token", {
       method: "POST",
@@ -34,10 +40,11 @@ export default function CallbackPage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setAuth(data.access_token, data.refresh_token, data.expires_in);
+        setAuth(data.access_token, data.refresh_token, Date.now() + data.expires_in * 1000);
+
         router.push('/dashboard');
-      });
-  }, [clientId, router, setAuth, verifier]);
+      }).catch((err => console.error(err)));
+  }, [callbackUrl, clientId, refreshToken, router, setAuth, verifier]);
 
   return (
      <Box backgroundColor='#000'>
