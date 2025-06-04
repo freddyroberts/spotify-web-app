@@ -16,7 +16,7 @@ export default function CallbackPage() {
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code');
     
-    if (!code || !refreshToken) { return; }
+    if (!code || !verifier) { return; }
 
     const params = new URLSearchParams();
     params.append("client_id", clientId);
